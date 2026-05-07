@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>la Pey — Gestión Operativa Personal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+  <div class="app" id="app">
+
+    <!-- WATERMARK -->
+    <div class="watermark">la Pey</div>
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="brand">
+        <span class="brand-name">la Pey</span>
+        <span class="brand-sub">Gestión operativa personal</span>
+      </div>
+      <div class="header-right">
+        <span class="date-badge" id="fechaHoy"></span>
+        <div class="api-status" id="apiStatus">
+          <span class="status-dot"></span>
+          <span class="status-label">IA lista</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- NAV -->
+    <nav class="nav">
+      <button class="nav-btn active" data-tab="captura" onclick="tab('captura',this)">Captura</button>
+      <button class="nav-btn" data-tab="dashboard" onclick="tab('dashboard',this)">Dashboard</button>
+      <button class="nav-btn" data-tab="informe" onclick="tab('informe',this)">Informe de valor</button>
+    </nav>
+
+    <!-- PANEL CAPTURA -->
+    <section id="p-captura" class="panel active">
+      <div class="capture-card">
+        <label class="field-label">Escribe lo que has hecho — sin estructurar</label>
+        <textarea id="txt" placeholder="Ej: He hablado con el proveedor Metálicas García, hay rotura de stock en tornillería M8, afecta a línea 3. He reorganizado turnos con producción y buscado alternativa en Aceros del Norte..."></textarea>
+        <div class="pills" id="pills">
+          <button class="pill" onclick="ex(0)">Incidencia máquina</button>
+          <button class="pill" onclick="ex(1)">Gestión proveedor</button>
+          <button class="pill" onclick="ex(2)">Coordinación cliente</button>
+          <button class="pill" onclick="ex(3)">Mejora detectada</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn-main" id="btnP" onclick="procesar()">Procesar con IA</button>
+          <button class="btn-ghost" onclick="document.getElementById('txt').value=''">Limpiar</button>
+        </div>
+      </div>
+
+      <div id="proc" class="processing" style="display:none">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <span>La Pey está analizando tu entrada...</span>
+      </div>
+
+      <div id="lista"></div>
+    </section>
+
+    <!-- PANEL DASHBOARD -->
+    <section id="p-dashboard" class="panel">
+      <div id="dash"></div>
+    </section>
+
+    <!-- PANEL INFORME -->
+    <section id="p-informe" class="panel">
+      <div class="report-wrap">
+        <div class="report-header">
+          <div>
+            <h2 class="report-title">Informe de valor</h2>
+            <p class="report-sub">Texto listo para dirección, reuniones o negociación de rol</p>
+          </div>
+          <div class="btn-row">
+            <button class="btn-main" id="btnI" onclick="informe()">Generar informe</button>
+            <button class="btn-ghost" onclick="copiar()">Copiar</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div id="rout" class="report-out placeholder">
+          Cuando tengas entradas registradas, genera aquí tu informe profesional: resumen ejecutivo, impacto real, patrones detectados y el texto para reportar a dirección o negociar tu posición.
+        </div>
+      </div>
+    </section>
+
+    <!-- API KEY MODAL -->
+    <div id="modal-overlay" class="modal-overlay">
+      <div class="modal">
+        <div class="modal-brand">la Pey</div>
+        <h2 class="modal-title">Configura tu clave de API</h2>
+        <p class="modal-desc">La Pey usa la IA de Anthropic (Claude) para procesar tus entradas. Necesitas una API key gratuita de <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
+        <label class="field-label" style="margin-bottom:6px;display:block">Tu API key</label>
+        <input type="password" id="apiKeyInput" placeholder="sk-ant-..." class="api-input" />
+        <p class="modal-hint">Se guarda solo en tu navegador. Nunca sale de tu dispositivo.</p>
+        <button class="btn-main" style="width:100%;margin-top:4px" onclick="guardarKey()">Guardar y empezar</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="src/app.js"></script>
+</body>
+</html>
