@@ -391,3 +391,86 @@ textarea::placeholder { color: var(--muted-light); font-weight: 300; }
   .capture-actions { width:100%; }
   .capture-actions .btn-main { flex:1; justify-content:center; }
 }
+
+/* === V6 — HISTORIAL I DASHBOARD VISUAL === */
+
+/* NAV 4 pestanyes */
+.nav { display:flex; background:var(--bg); border-bottom:1px solid var(--border); margin-bottom:2rem; }
+.nav-btn { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; padding:11px 6px; font-family:var(--font-body); font-size:11px; font-weight:400; border:none; background:transparent; color:var(--muted); cursor:pointer; transition:all 0.2s; letter-spacing:0.04em; text-transform:uppercase; border-bottom:2px solid transparent; margin-bottom:-1px; }
+.nav-btn.active { color:var(--green); border-bottom-color:var(--orange); font-weight:500; }
+.nav-btn:not(.active):hover { color:var(--green); background:var(--green-pale); }
+
+/* HISTORIAL */
+.hist-hero { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:1.5rem; gap:1rem; flex-wrap:wrap; }
+.hist-title { font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--ink); letter-spacing:-0.5px; margin-bottom:2px; }
+.hist-sub { font-size:13px; color:var(--muted); font-weight:300; }
+.hist-stats { display:flex; gap:8px; flex-wrap:wrap; }
+.hist-stat-pill { background:var(--white); border:1px solid var(--border); border-radius:20px; padding:5px 12px; font-size:12px; color:var(--muted); }
+.hist-stat-pill strong { color:var(--green); font-weight:600; }
+
+/* FILTERS */
+.filters-bar { display:flex; gap:8px; margin-bottom:1.25rem; flex-wrap:wrap; }
+.search-input { flex:1; min-width:160px; font-family:var(--font-body); font-size:13px; color:var(--ink); background:var(--white); border:1px solid var(--border); border-radius:var(--radius-md); padding:9px 14px; outline:none; transition:border-color 0.15s; }
+.search-input:focus { border-color:var(--green); }
+.filter-sel { font-family:var(--font-body); font-size:12px; color:var(--ink-mid); background:var(--white); border:1px solid var(--border); border-radius:var(--radius-md); padding:9px 12px; outline:none; cursor:pointer; transition:border-color 0.15s; }
+.filter-sel:focus { border-color:var(--green); }
+
+/* TAULA HISTORIAL */
+.hist-table { background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); }
+.hist-table-header { display:grid; grid-template-columns:90px 1fr 100px 80px 80px 36px; gap:10px; padding:10px 16px; background:var(--bg); border-bottom:1px solid var(--border); font-size:10px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+.hist-row { display:grid; grid-template-columns:90px 1fr 100px 80px 80px 36px; gap:10px; padding:12px 16px; border-bottom:1px solid var(--border); align-items:center; transition:background 0.15s; }
+.hist-row:last-child { border-bottom:none; }
+.hist-row:hover { background:var(--bg); }
+.hist-date { font-size:12px; color:var(--muted); }
+.hist-accio { font-size:13px; color:var(--ink); line-height:1.4; }
+.hist-accio .hist-orig { font-size:11px; color:var(--muted-light); font-style:italic; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+.hist-del { background:transparent; border:none; color:var(--muted-light); cursor:pointer; font-size:14px; width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
+.hist-del:hover { color:var(--red); background:var(--red-bg); }
+.hist-empty { text-align:center; padding:3rem 1rem; color:var(--muted); font-size:13px; }
+
+/* GRUPS PER DIA */
+.hist-day-group { margin-bottom:1.25rem; }
+.hist-day-label { font-size:11px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; padding:0 4px; display:flex; align-items:center; gap:8px; }
+.hist-day-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* DASHBOARD V2 — GRÀFICS */
+.dash-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:1.5rem; }
+.dash-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:1.25rem; box-shadow:var(--shadow-sm); }
+.dash-card.full { grid-column:1/-1; }
+.dash-card-title { font-size:11px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:1rem; }
+
+/* DONUT CHART */
+.donut-wrap { display:flex; align-items:center; gap:1.5rem; }
+.donut-svg { flex-shrink:0; }
+.donut-legend { display:flex; flex-direction:column; gap:8px; }
+.donut-item { display:flex; align-items:center; gap:8px; font-size:13px; }
+.donut-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.donut-label { color:var(--ink-mid); }
+.donut-val { color:var(--muted); font-size:12px; margin-left:auto; font-weight:500; }
+
+/* BARRES HORITZONTALS MILLORADES */
+.bar-chart { display:flex; flex-direction:column; gap:10px; }
+.bar-item { display:flex; flex-direction:column; gap:4px; }
+.bar-top { display:flex; justify-content:space-between; font-size:12px; }
+.bar-name { color:var(--ink-mid); text-transform:capitalize; }
+.bar-num { color:var(--muted); font-weight:600; font-family:var(--font-display); }
+.bar-track { height:8px; background:var(--bg); border-radius:4px; overflow:hidden; border:1px solid var(--border); }
+.bar-fill { height:100%; border-radius:4px; transition:width 0.8s cubic-bezier(0.4,0,0.2,1); }
+
+/* MINI CALENDARI D'ACTIVITAT */
+.activity-grid { display:flex; flex-direction:column; gap:6px; }
+.activity-week { display:flex; gap:4px; }
+.activity-day { width:24px; height:24px; border-radius:4px; background:var(--bg); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--muted-light); cursor:default; transition:all 0.15s; }
+.activity-day.has-1 { background:#C8E8E5; border-color:#A8D4D0; }
+.activity-day.has-2 { background:#88C4BE; border-color:#68B0AA; color:white; }
+.activity-day.has-3 { background:#1C4A47; border-color:#143533; color:white; }
+.activity-day.today { border-color:var(--orange) !important; border-width:2px; }
+
+@media (max-width:580px) {
+  .dash-grid { grid-template-columns:1fr; }
+  .hist-table-header { display:none; }
+  .hist-row { grid-template-columns:1fr 36px; gap:8px; }
+  .hist-row > *:not(.hist-accio):not(.hist-del) { display:none; }
+  .filters-bar { flex-direction:column; }
+  .search-input { width:100%; }
+}
