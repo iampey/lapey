@@ -43,7 +43,7 @@ async function procesar(){
     if(tenimText&&!tenimFitxers){document.getElementById('loadingText').textContent='La Pey analitza la teva entrada...';const r=await analitzarText(textoBase||textoExtra);if(r)resultats.push(r);}
     if(!resultats.length&&tenimText){const r=await analitzarText(textoBase||textoExtra);if(r)resultats.push(r);}
     const ara=new Date();
-    for(const parsed of resultats){tareas.unshift({id:Date.now()+Math.random(),timestamp:ara.toISOString(),hora:ara.toLocaleTimeString('ca-ES',{hour:'2-digit',minute:'2-digit'}),dia:ara.toLocaleDateString('ca-ES',{day:'2-digit',month:'short'}),diaKey:ara.toISOString().split('T')[0],texto:textoBase||textoExtra||fitxersPendents.map(f=>f.name).join(', '),attachments:fitxersPendents.filter(f=>f.isImage).map(f=>({dataUrl:f.dataUrl,name:f.name})),docAttachments:fitxersPendents.filter(f=>!f.isImage).map(f=>({name:f.name})),fromFile:tenimFitxers,...parsed});}
+    for(const parsed of resultats){tareas.unshift({id:Date.now()+Math.random(),timestamp:ara.toISOString(),hora:ara.toLocaleTimeString('ca-ES',{hour:'2-digit',minute:'2-digit'}),dia:ara.toLocaleDateString('ca-ES',{day:'2-digit',month:'short'}),diaKey:ara.toISOString().split('T')[0],texto:textoBase||textoExtra||fitxersPendents.map(f=>f.name).join(', '),attachments:fitxersPendents.filter(f=>f.isImage).map(f=>({name:f.name})),docAttachments:fitxersPendents.filter(f=>!f.isImage).map(f=>({name:f.name})),fromFile:tenimFitxers,...parsed});}
     localStorage.setItem(STORAGE_KEY,JSON.stringify(tareas));netejar();renderLista();
   }catch(e){alert('Error al processar: '+e.message);}
   finally{btn.disabled=false;document.getElementById('proc').style.display='none';document.getElementById('loadingText').textContent='La Pey analitza la teva entrada...';}
