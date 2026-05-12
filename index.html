@@ -94,6 +94,10 @@
         </div>
         <div class="hist-stats" id="histStats"></div>
       </div>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <button class="btn-ghost" onclick="exportarDades()" style="font-size:13px">⬇ Exportar dades</button>
+        <label class="btn-ghost" style="font-size:13px;cursor:pointer">⬆ Importar dades<input type="file" accept=".json" style="display:none" onchange="importarDades(this)"/></label>
+      </div>
       <div class="filters-bar">
         <input type="text" id="searchInput" class="search-input" placeholder="🔍  Cerca..." oninput="renderHistorial()" />
         <select id="filterPeriode" class="filter-sel" onchange="renderHistorial()">
