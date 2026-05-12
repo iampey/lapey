@@ -54,14 +54,14 @@ async function analitzarFitxer(fitxer,contextExtra){
   if(fitxer.isImage)content.push({type:'image',source:{type:'base64',media_type:fitxer.mediaType,data:fitxer.base64}});
   else if(fitxer.isPdf)content.push({type:'document',source:{type:'base64',media_type:'application/pdf',data:fitxer.base64}});
   content.push({type:'text',text:`Analitza aquest fitxer (${fitxer.name}) i extreu informació operativa.${contextExtra?' Context: "'+contextExtra+'"':''}\nRespon NOMÉS amb JSON vàlid:\n{"tipo":"operativa|gestió|millora","area":"producció|logística|clients|compres|equip|manteniment|qualitat|administració","prioridad":"alta|mitja|baixa","accion":"max 14 paraules","problema":"max 14 paraules o null","solucion":"max 14 paraules o null"}`});
-  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:400,messages:[{role:'user',content}]})});
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content}]})});
   if(!res.ok){const err=await res.json();throw new Error(err.error?.message||'Error API');}
   const data=await res.json();
   return JSON.parse((data.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
 }
 
 async function analitzarText(texto){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:300,messages:[{role:'user',content:`Ets un assistent de gestió operativa. Analitza i respon NOMÉS amb JSON vàlid:\nEntrada: "${texto}"\n{"tipo":"operativa|gestió|millora","area":"producció|logística|clients|compres|equip|manteniment|qualitat|administració","prioridad":"alta|mitja|baixa","accion":"max 14 paraules","problema":"max 14 paraules o null","solucion":"max 14 paraules o null"}`}]})});
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,messages:[{role:'user',content:`Ets un assistent de gestió operativa. Analitza i respon NOMÉS amb JSON vàlid:\nEntrada: "${texto}"\n{"tipo":"operativa|gestió|millora","area":"producció|logística|clients|compres|equip|manteniment|qualitat|administració","prioridad":"alta|mitja|baixa","accion":"max 14 paraules","problema":"max 14 paraules o null","solucion":"max 14 paraules o null"}`}]})});
   const data=await res.json();
   return JSON.parse((data.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
 }
@@ -163,7 +163,7 @@ async function informe(){
   const resum=filtrades.map(t=>`- [${(t.tipo||'').toUpperCase()}][${t.area||'general'}][${t.prioridad}] ${t.accion}${t.problema?' | Problema: '+t.problema:''}${t.solucion?' | Solució: '+t.solucion:''}${t.fromFile?' [fitxer]':''}`).join('\n');
   const etPeriode=periode==='setmana'?'aquesta setmana':periode==='mes'?'aquest mes':'tot el període';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:900,messages:[{role:'user',content:`Ets un consultor d'operacions industrials. Redacta un informe professional en espanyol per ${etPeriode}. To executiu, directe. Màxim 400 paraules.\n\nREGISTRE:\n${resum}\n\nSeccions (sense markdown):\n\nRESUMEN EJECUTIVO\nIMPACTO OPERATIVO\nPATRONES Y RIESGOS DETECTADOS\nPROPUESTAS DE MEJORA\nVALOR APORTADO`}]})});
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:`Ets un consultor d'operacions industrials. Redacta un informe professional en espanyol per ${etPeriode}. To executiu, directe. Màxim 400 paraules.\n\nREGISTRE:\n${resum}\n\nSeccions (sense markdown):\n\nRESUMEN EJECUTIVO\nIMPACTO OPERATIVO\nPATRONES Y RIESGOS DETECTADOS\nPROPUESTAS DE MEJORA\nVALOR APORTADO`}]})});
     const data=await res.json();el.textContent=data.content?.[0]?.text||'Error.';
   }catch(e){el.textContent='Error: '+e.message;}
   finally{btn.disabled=false;btn.innerHTML='<span class="btn-spark">❋</span> Generar';}
